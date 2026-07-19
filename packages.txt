@@ -7,7 +7,7 @@ libdrm2
 libgbm1
 libgtk-3-0
 libnspr4
-libx11-xcomposite1
+libxcomposite1
 libxdamage1
 libxfixes3
 libxrandr2
@@ -15,7 +15,6 @@ libasound2
 libpangocairo-1.0-0
 libpango-1.0-0
 libatspi2.0-0
-libxcomposite1
 libxi6
 libxtst6
 fonts-liberation
