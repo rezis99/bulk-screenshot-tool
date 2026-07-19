@@ -66,8 +66,7 @@ st.caption("Paste URLs, adjust settings, and download a zip of full-page screens
 # SAFETY LAYER — needed once this app is on the public internet
 # ==============================================================
 # Hard caps so one visitor can't overload the free server.
-MAX_URLS_PER_RUN = 25
-MAX_CONCURRENT_TABS_ALLOWED = 3
+MAX_CONCURRENT_TABS_ALLOWED = 10
 
 # --- Optional password gate ---------------------------------
 # Set APP_PASSWORD in Hugging Face Space "Settings > Variables and secrets".
@@ -115,7 +114,7 @@ with st.sidebar:
         JPEG_QUALITY = st.slider("JPEG Quality", 1, 100, 80)
 
     VIEWPORT_WIDTH = st.number_input("Viewport Width (px)", 320, 3840, 1440, step=10)
-    CONCURRENT_TABS = st.slider("Concurrent Tabs", 1, MAX_CONCURRENT_TABS_ALLOWED, min(3, MAX_CONCURRENT_TABS_ALLOWED))
+    CONCURRENT_TABS = st.slider("Concurrent Tabs", 1, MAX_CONCURRENT_TABS_ALLOWED, 5)
     PAGE_LOAD_TIMEOUT_S = st.number_input("Page Load Timeout (s)", 5, 120, 30)
     EXTRA_WAIT = st.number_input("Extra Wait After Load (s)", 0.0, 30.0, 2.0, step=0.5)
     DELAY_BETWEEN_BATCHES = st.number_input("Delay Between Batches (s)", 0.0, 30.0, 2.0, step=0.5)
@@ -382,9 +381,6 @@ if run_clicked:
 
     if not urls_list:
         st.error("No valid URLs found. Paste at least one URL above.")
-    elif len(urls_list) > MAX_URLS_PER_RUN:
-        st.error(f"Too many URLs ({len(urls_list)}). This shared instance is capped at "
-                  f"{MAX_URLS_PER_RUN} per run — please split into smaller batches.")
     else:
         blocked = [u["url"] for u in urls_list if is_private_or_internal(u["url"])]
         if blocked:
