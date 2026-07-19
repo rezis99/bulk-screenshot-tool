@@ -16,6 +16,13 @@ DEPLOY TO STREAMLIT COMMUNITY CLOUD (free, public link):
 import asyncio
 import ipaddress
 import os
+
+# Force Playwright to use its lightweight headless shell binary.
+# The full chrome binary requires libgtk/libcups which conflict with
+# Streamlit Cloud's mixed Debian trixie + legacy repo setup.
+# Headless shell works perfectly for screenshots and avoids those deps.
+os.environ['PLAYWRIGHT_CHROMIUM_USE_HEADLESS_NEW'] = '0'
+
 import re
 import csv
 import socket
